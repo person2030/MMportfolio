@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Photoshop Portfolio</title>
+    <style>
+        /* Color Palette & Global Styles */
+        :root {
+            --bg-dark-pink: #882d55;
+            --accent-light-pink: #d883a9;
+            --accent-lighter: #f7d6e3;
+            --card-white: #ffffff;
+            --text-crisp: #ffffff;
+            --text-dark: #333333;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-dark-pink);
+            color: var(--text-crisp);
+            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* Navigation Bar */
+        nav {
+            background-color: rgba(0, 0, 0, 0.2);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid var(--accent-light-pink);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-logo {
+            font-weight: bold;
+            font-size: 1.25rem;
+            letter-spacing: 1px;
+            color: var(--text-crisp);
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-crisp);
+            font-weight: 500;
+            transition: color 0.3s ease;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            color: var(--card-white);
+            background-color: var(--accent-light-pink);
+        }
+
+        /* Header Banner Slideshow */
+        header {
+            width: 100%;
+            height: 380px;
+            position: relative;
+            background-color: var(--accent-light-pink);
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .slideshow-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+            object-fit: cover;
+            filter: brightness(0.85);
+        }
+
+        .slide.active {
+            opacity: 1;
+        }
+
+        .banner-text {
+            position: relative;
+            z-index: 10;
+            background: rgba(136, 45, 85, 0.75);
+            padding: 1.5rem 2.5rem;
+            border-radius: 8px;
+            text-align: center;
+            border: 1px solid var(--accent-light-pink);
+            backdrop-filter: blur(4px);
+        }
+
+        .banner-text h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .banner-text p {
+            font-size: 1.1rem;
+            color: var(--accent-lighter);
+        }
+
+        /* Main Content Layout */
+        main {
+            flex: 1;
+            max-width: 1100px;
+            width: 90%;
+            margin: 2rem auto;
+        }
+
+        .content-card {
+            background-color: var(--card-white);
+            color: var(--text-dark);
+            padding: 2.5rem;
+            border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+            display: flex;
+            flex-direction: column;
+            gap: 2.5rem;
+        }
+
+        .bio-content {
+            width: 100%;
+        }
+
+        .bio-content h2 {
+            color: var(--bg-dark-pink);
+            margin-bottom: 1rem;
+            font-size: 1.8rem;
+            border-bottom: 2px solid var(--accent-lighter);
+            padding-bottom: 0.5rem;
+        }
+
+        .bio-content p {
+            margin-bottom: 1.2rem;
+            font-size: 1.05rem;
+            line-height: 1.7;
+        }
+
+        /* Photoshop Grid Layout */
+        .photoshop-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            width: 100%;
+            margin-top: 1rem;
+        }
+
+        .portfolio-item {
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+            border: 4px solid var(--accent-lighter);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .portfolio-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .portfolio-img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            display: block;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 1.5rem;
+            background-color: rgba(0, 0, 0, 0.15);
+            color: var(--accent-lighter);
+            font-size: 0.9rem;
+            border-top: 1px solid var(--accent-light-pink);
+            margin-top: auto;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            nav {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 0.8rem;
+            }
+
+            .content-card {
+                padding: 1.5rem;
+            }
+
+            .bio-content h2 {
+                text-align: center;
+            }
+
+            .photoshop-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="nav-logo">CREATIVE PORTFOLIO</div>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="photoshop.html" class="active">Photoshop</a></li>
+            <li><a href="contact.html">Contact</a></li>
+        </ul>
+    </nav>
+
+    <header>
+        <div class="slideshow-container">
+            <img class="slide active" src="clelland-chloe-hocoposter.png" alt="Featured Photoshop Project Banner">
+        </div>
+        <div class="banner-text">
+            <h1>Photoshop Artwork</h1>
+            <p>Digital designs, composites, and layouts</p>
+        </div>
+    </header>
+
+    <main>
+        <div class="content-card">
+            <div class="bio-content">
+                <h2>Project Overview</h2>
+                
+                <!-- Write your content in the paragraph space below -->
+                <p></p>
+                
+            </div>
+
+            <!-- Photoshop Showcase Grid -->
+            <div class="photoshop-grid">
+                <div class="portfolio-item">
+                    <img class="portfolio-img" src="clelland-chloe-camotakeover.jpg" alt="Camo Takeover Graphic Design">
+                </div>
+                <div class="portfolio-item">
+                    <img class="portfolio-img" src="clelland-chloe-cheertailgate.jpg" alt="Cheer Tailgate Graphic Design">
+                </div>
+                <div class="portfolio-item">
+                    <img class="portfolio-img" src="clelland-chloe-clippingmaskcheer.jpg" alt="Clipping Mask Cheer Design">
+                </div>
+                <div class="portfolio-item">
+                    <img class="portfolio-img" src="clelland-chloe-hocofootball.jpg" alt="Homecoming Football Artwork">
+                </div>
+                <div class="portfolio-item">
+                    <img class="portfolio-img" src="clelland-chloe-hocoposter.png" alt="Homecoming Poster Design">
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Creative Portfolio. All rights reserved.</p>
+    </footer>
+
+</body>
+</html>
